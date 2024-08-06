@@ -1,10 +1,21 @@
 <script setup>
-    const addFood = () => {
-      // Implement your add logic here
-      console.log("Add button clicked");
-};
+  import { ref } from 'vue';
 
+  const foodName = ref('');
+  const category = ref('');
+  const manufactureDate = ref('');
+  const expirationDate = ref('');
 
+  const emit = defineEmits(['addFood'])
+
+  const sendAddFood = () => {
+    emit('addFood', {
+      foodName: foodName.value,
+      category: category.value,
+      manufactureDate: manufactureDate.value,
+      expirationDate: expirationDate.value
+    });
+  };
 </script>
 
 <template>
@@ -35,6 +46,7 @@
               type="text"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="Enter food name"
+              v-model="foodName"
             />
           </div>
           <div>
@@ -46,6 +58,7 @@
               type="text"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="Enter category"
+              v-model="category"
             />
           </div>
           <div>
@@ -56,7 +69,8 @@
               id="manufacture-date"
               type="date"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-            />
+              v-model="manufactureDate"
+              />
           </div>
           <div>
             <label for="expiration-date" class="block text-sm font-medium text-gray-700">
@@ -66,7 +80,8 @@
               id="expiration-date"
               type="date"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-            />
+              v-model="expirationDate"
+              />
           </div>
         </div>
   
@@ -80,7 +95,7 @@
           </button>
           <button
             class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600"
-            @click="addFood"
+            @click="sendAddFood"
           >
             Add
           </button>

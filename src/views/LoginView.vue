@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-
 import { useRouter } from 'vue-router'
+
+import useUserStore  from '../stores/userStore.js';
 import axios from '../api/axios'
 
 const router = useRouter();
+const userStore = useUserStore();
 
 const email = ref('')
 const password = ref('')
@@ -20,10 +22,12 @@ const handleSubmit = async () => {
       console.log(response.data.error)
       return
     } 
+    
+    userStore.setUserInfo(response.data.user)
+    userStore.setToken(response.data.token)
 
     localStorage.setItem('token', response.data.token)
 
-    console.log(response.data)
     router.push('/food')
   } catch (error) {
     console.error(error)

@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import FoodView from '../views/FoodView.vue'
+import authGuard from '../middlewares/auth.js';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +22,8 @@ const router = createRouter({
     {
       path: '/food',
       name: 'food',
-      component: FoodView
+      component: FoodView,
+      beforeEnter: authGuard
     }
   ]
 })
