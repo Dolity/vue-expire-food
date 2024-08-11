@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
+import moment from 'moment';
 
 const props = defineProps({
   isEdit: Boolean,
@@ -20,8 +21,8 @@ watch(
     if (newFood) {
       name.value = newFood.name || '';
       category.value = newFood.category || '';
-      manufacture_date.value = newFood.manufacture_date || '';
-      expiration_date.value = newFood.expiration_date || '';
+      manufacture_date.value = newFood.manufacture_date ? moment(newFood.manufacture_date).format('YYYY-MM-DD') : '';
+      expiration_date.value = newFood.expiration_date ? moment(newFood.expiration_date).format('YYYY-MM-DD') : '';
     } else {
       name.value = '';
       category.value = '';
@@ -33,6 +34,9 @@ watch(
 );
 
 const callBackFood = () => {
+  console.log('Manufacture Date:', manufacture_date.value);
+  console.log('Expiration Date:', expiration_date.value);
+
   emit('addOrUpdateFood', {
     id: props.food?.id,
     name: name.value,
@@ -80,7 +84,7 @@ const callBackFood = () => {
           <label for="manufacture-date" class="block text-sm font-medium text-gray-700">Manufacture Date</label>
           <input
             id="manufacture-date"
-            type="datetime-local"
+            type="date"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             v-model="manufacture_date"
           />
@@ -89,7 +93,7 @@ const callBackFood = () => {
           <label for="expiration-date" class="block text-sm font-medium text-gray-700">Expiration Date</label>
           <input
             id="expiration-date"
-            type="datetime-local"
+            type="date"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             v-model="expiration_date"
           />

@@ -7,12 +7,13 @@ const useUserStore = defineStore("user", {
         token: null
     }),
     actions: {
-        setUserInfo(userInfo) {
-            this.userInfo = userInfo;
-            this.isLogin = true;
-        },
-        setToken(token) {
-            this.token = token
+        loadUserFromLocalStorage(userInfo) {
+            const token = localStorage.getItem("token");
+            if (token) {
+                this.userInfo = userInfo;
+                this.token = token;
+                this.isLogin = true;
+            }
         },
         clearUserInfo() {
             this.userInfo = null;

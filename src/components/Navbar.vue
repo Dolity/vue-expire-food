@@ -1,5 +1,6 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import useUserStore from '../stores/userStore.js';
 import router from '@/router/index.js';
 
@@ -11,6 +12,10 @@ const logout = () => {
   userStore.clearUserInfo();
   router.push('/login');
 };
+
+onMounted(() => {
+  userStore.loadUserFromLocalStorage(); 
+});
 
 </script>
 
@@ -68,21 +73,25 @@ const logout = () => {
                 </a>
               </router-link>
     
-              <a
+              <router-link to="/register">
+                <a
                 class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
                 href="#"
-              >
+                >
                 Register
               </a>
+            </router-link>
             </div>
 
             <div v-else class="sm:flex sm:gap-4">
-              <a
+              <router-link to="/login">
+                <a
                 class="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
                 @click="logout"
-              >
+                >
                 Logout
               </a>
+            </router-link>
     
             </div>
     
